@@ -28,6 +28,8 @@ if ($status == false) {
             $output .= '<a href="memory.php?name='.$name.'&date='.$record["date"].'">';
             $output .= $record['date'];
             $output .= "</a>";
+            $output .= "  ";
+            $output .= '<a href="delete.php?name='.$name.'&date='.$record["date"].'">delete</a>';
             $output .= "</p>";
             $date = $record["date"];
         } 
