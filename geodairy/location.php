@@ -1,17 +1,11 @@
 <?php
-if (
-    !isset($_POST['name']) || $_POST['name']=='' ||
-    !isset($_POST['lat']) || $_POST['lat']==''  ||
-    !isset($_POST['lng']) || $_POST['lng']==''
-  ) {
-    exit('ParamError');
-  }
+session_start();
+include('funcs.php');
 
-$name = $_POST['name'];
+$name = $_SESSION['username'];
 $lat = $_POST['lat'];
 $lng = $_POST['lng'];
 
-include('funcs.php');
 $pdo = db_connect();
 
 $sql = 'INSERT INTO php_sample2 (id, name, latitude, longitude, date, time) VALUES (NULL, :name, :latitude, :longitude, CURDATE(), CURTIME())';

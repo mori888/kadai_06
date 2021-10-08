@@ -2,35 +2,7 @@
 session_start();
 include('funcs.php');
 
-$name = $_SESSION['username'];
-$pdo = db_connect();
-
-$sql = 'SELECT date FROM `php_sample2` WHERE name=:name ORDER BY date ASC';
-$stmt = $pdo->prepare($sql);
-$stmt->bindValue(':name', $name, PDO::PARAM_STR);
-$status = $stmt->execute();
-
-if ($status == false) {
-    $error = $stmt->errorInfo();
-    exit('sqlError:'.$error[2]);
-  } else {
-    $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    $output = "";
-    $date = "";
-    foreach ($result as $record) {
-        if($date !== $record["date"]){
-            $output .= "<p>";
-            $output .= '<a href="memory.php?name='.$name.'&date='.$record["date"].'">';
-            $output .= $record['date'];
-            $output .= "</a>";
-            $output .= "  ";
-            $output .= '<a href="delete.php?date='.$record["date"].'">delete</a>';
-            $output .= "</p>";
-            $date = $record["date"];
-        } 
-    }
-  }
-
+$username = $_SESSION['username'];
 ?>
 <!DOCTYPE html>
 <html lang="ja">
@@ -48,8 +20,7 @@ if ($status == false) {
       <legend>現在地情報</legend>
       <button type="button" id="getPosition">現在位置取得</button>
       <div>
-        <?= $name ?>
-      <div>
+        <?= $username ?>
       <div>
         緯度<input type="text"  id="lat" name="lat">
       </div>
@@ -57,12 +28,9 @@ if ($status == false) {
         経度<input type="text" id="lng" name="lng">
       </div>
       <button type="submit" formaction="location.php">保存</button>
+      <button type="submit" formaction="input_memory.php">保存した位置情報</button>
     </fieldset>
   </form>
-
-    <fieldset>
-        <?= $output ?>
-    </fieldset>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script> 

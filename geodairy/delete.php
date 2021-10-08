@@ -1,8 +1,10 @@
 <?php
-$name = $_GET['name'];
+session_start();
+include('funcs.php');
+
+$name = $_SESSION['username'];
 $date = $_GET['date'];
 
-include('funcs.php');
 $pdo = db_connect();
 
 $sql = 'DELETE FROM php_sample2 WHERE name=:name and date=:date';
