@@ -3,9 +3,11 @@ session_start();
 include('funcs.php');
 
 $name = $_SESSION['username'];
+$user_id = $_SESSION['id'];
+
 $pdo = db_connect();
 
-$sql = 'SELECT date FROM `php_sample2` WHERE name=:name ORDER BY date ASC';
+$sql = 'SELECT * FROM `php_sample2` WHERE name=:name ORDER BY date ASC';
 $stmt = $pdo->prepare($sql);
 $stmt->bindValue(':name', $name, PDO::PARAM_STR);
 $status = $stmt->execute();
@@ -23,6 +25,8 @@ if ($status == false) {
             $output .= '<a href="memory.php?name='.$name.'&date='.$record["date"].'">';
             $output .= $record['date'];
             $output .= "</a>";
+            $output .= "  ";
+            $output .= "<a href='like_create.php?user_id={$user_id}&todo_id={$record["id"]}'>like</a>";
             $output .= "  ";
             $output .= '<a href="delete.php?date='.$record["date"].'">delete</a>';
             $output .= "</p>";

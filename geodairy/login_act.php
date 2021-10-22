@@ -32,6 +32,7 @@ if ($status == false) {
       $_SESSION = array();
       $_SESSION['session_id'] = session_id();
       $_SESSION['is_admin'] = $val['is_admin'];
+      $_SESSION['id'] = $val['id'];
       $_SESSION['username'] = $val['username'];
       header("Location:input.php");
       exit();
